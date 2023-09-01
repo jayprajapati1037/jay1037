@@ -80,11 +80,6 @@ def Delete_Books(request, myid):
         return redirect('/all_books')
     return render(request, 'delete_book.html', {'books':books})
 
-@login_required(login_url = '/user_login')
-def Users(request):
-    books = Book.objects.all()
-    total_books = books.count()
-    return render (request, "for_user.html", {'books':books, 'total_books':total_books})
 
 def Add_Books(request):
     if request.method=="POST":
@@ -95,6 +90,35 @@ def Add_Books(request):
     else:
         form=BookForm()
     return render(request, "add_books.html", {'form':form})
+
+
+def see_requested_books(request):
+    requested_book = Request_Book.objects.all()
+    requested_books_count = requested_book.count()
+    return render(request, "see_requested_books.html", {'requested_book':requested_book, 'requested_books_count':requested_books_count})
+
+
+
+def delete_requested_books(request, myid):
+    delete_book = Request_Book.objects.get(id=myid)
+    if request.method == "POST":
+        delete_book.delete()
+        return redirect('/see_requested_books')
+    return render(request, "delete_requested_books.html", {'delete_book':delete_book})
+
+
+def customers_list(request):
+    customers = Order.objects.all()
+    customer_count = customers.count()
+    return render(request, "customers_list.html", {'customers':customers, 'customer_count':customer_count})
+
+
+@login_required(login_url = '/user_login')
+def Users(request):
+    books = Book.objects.all()
+    total_books = books.count()
+    return render (request, "for_user.html", {'books':books, 'total_books':total_books})
+
 
 def request_books(request):
     if request.method=="POST":
@@ -107,22 +131,6 @@ def request_books(request):
         return render(request, "request_books.html", {'thank':thank})
     return render(request, "request_books.html")
 
-def see_requested_books(request):
-    requested_book = Request_Book.objects.all()
-    requested_books_count = requested_book.count()
-    return render(request, "see_requested_books.html", {'requested_book':requested_book, 'requested_books_count':requested_books_count})
-
-def delete_requested_books(request, myid):
-    delete_book = Request_Book.objects.get(id=myid)
-    if request.method == "POST":
-        delete_book.delete()
-        return redirect('/see_requested_books')
-    return render(request, "delete_requested_books.html", {'delete_book':delete_book})
-
-def customers_list(request):
-    customers = Order.objects.all()
-    customer_count = customers.count()
-    return render(request, "customers_list.html", {'customers':customers, 'customer_count':customer_count})
 
 def orders_list(request, myid):
     customer = Order.objects.filter(id=myid)

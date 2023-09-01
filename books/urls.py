@@ -9,10 +9,10 @@ urlpatterns = [
     
 #     For admin
     path("all_books/", views.allbook, name="Admin"),
-    path("customers_list/", views.customers_list, name="customers_list"),
-    path("add_books/", views.Add_Books, name="add_new_books"),
     path("all_books/delete_<int:myid>/", views.Delete_Books, name="delete_book"),
+    path("add_books/", views.Add_Books, name="add_new_books"),
     path("see_requested_books/", views.see_requested_books, name="see_requested_books"),
+    path("customers_list/", views.customers_list, name="customers_list"),
     path("delete_requested_books/delete_<int:myid>/", views.delete_requested_books, name="delete_requested_books"),
     path("customers_list/orders_<int:myid>/", views.orders_list, name="orders_list"),
     path("customers_list/orders_<int:myid>/data/", views.data_view, name="data"),
@@ -23,3 +23,7 @@ urlpatterns = [
     path("request_books/", views.request_books, name="request_books"),   
     path("checkout/", views.checkout, name="checkout"),    
 ]
+
+
+
+
